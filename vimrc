@@ -1,10 +1,5 @@
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   Filename: .vimrc                                                         "
-" Maintainer: Michael J. Smalley <michaeljsmalley@gmail.com>                 "
-"        URL: http://github.com/michaeljsmalley/dotfiles                     "
-"                                                                            "
-"                                                                            "
 " Sections:                                                                  "
 "   01. General ................. General Vim behavior                       "
 "   02. Events .................. General autocmd events                     "
@@ -48,6 +43,12 @@ Plugin 'gmarik/Vundle.vim'
 "Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Avoid a name conflict with L9
 "Plugin 'user/L9', {'name': 'newL9'}
+
+Plugin 'nvie/vim-togglemouse'
+Plugin 'JuliaLang/julia-vim'
+Plugin 'YankRing.vim'
+Plugin 'LustyJuggler'
+Plugin 'gundo'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -109,11 +110,14 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 04. Vim UI                                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let mapleader=","
+let maplocalleader="\\"
+
 set number                " show line numbers
 set numberwidth=6         " make the number gutter 6 characters wide
 set cul                   " highlight current line
 set laststatus=2          " last window always has a statusline
-set nohlsearch            " Don't continue to highlight searched phrases.
+set hlsearch              " highlight searched phrases.
 set incsearch             " But do highlight as you type your search.
 set ignorecase            " Make searches case-insensitive.
 set ruler                 " Always show info along bottom.
@@ -121,18 +125,60 @@ set showmatch
 set statusline=%<%f\%h%m%r%=%-20.(line=%l\ \ col=%c%V\ \ totlin=%L%)\ \ \%h%m%r%=%-40(bytval=0x%B,%n%Y%)\%P
 set visualbell
 
+set showmode              " Always show what mode we are in
+set smartcase             " ignore case if all lower-case
+set gdefault              " search/replace globally (on a line)
+set pastetoggle=<F2>      " in insert mode toggle paste mode
+set mouse=a               " use the mouse in all modes
+set clipboard=unnamed     " normal clipboard interaction
+set hidden                " hide buffers
+set history=1000          " history
+set undolevels=1000       " many undos
+if v:version >= 730
+    set undofile          " keep a persistent undo file
+    set undodir=~/.vim/.undo,~/tmp,/tmp
+endif
+set nobackup              " Really - have I ever use this?
+set noswapfile            " Here also.
+set wildmenu              " tab completion for files and dirs
+set wildmode=list:full    " show a list when pressing tab
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.o
+set visualbell            " don't beep
+set noerrorbells          " don't beep
+set showcmd               " show partial command in last line.
+
+nmap <silent> <leader>/ :nohlsearch<CR>
+
+nnoremap <leader>N :setlocal number!<cr>
+vnoremap Q gq
+nnoremap Q gqap
+
+" grep for word under cursor
+vnoremap <leader>a y:grep! "\b<c-r>"\b"<cr>:cs<cr>
+nnoremap <leader>a :grep! "\b<c-r><c-w>\b"
+nnoremap K *N:grep! "\b<c-r><c-w>\b"<cr>:cw<cr>
+
+nnoremap ; :
+
+nnoremap j gj
+nnoremap k gk
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 05. Text Formatting/Layout                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set autoindent            " auto-indent
-set tabstop=2             " tab spacing
-set softtabstop=2         " unify
-set shiftwidth=2          " indent/outdent by 2 columns
+set tabstop=4             " tab spacing
+set softtabstop=4         " unify
+set shiftwidth=4          " indent/outdent by 2 columns
 set shiftround            " always indent/outdent to the nearest tabstop
 set expandtab             " use spaces instead of tabs
 set smartindent           " automatically insert one extra level of indentation
 set smarttab              " use tabs at the start of a line, spaces elsewhere
 set nowrap                " don't wrap text
+
+set backspace=indent,eol,start " backspacing over everything
+set copyindent            " copy previous indentation on autoindenting
+set formatoptions+=1      " Don't allow 1-letter words at end of lines
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 06. Custom Commands                                                        "
