@@ -116,18 +116,15 @@ let maplocalleader="\\"
 set number                " show line numbers
 set numberwidth=6         " make the number gutter 6 characters wide
 set cul                   " highlight current line
-set laststatus=2          " last window always has a statusline
+
+" search
+set smartcase             " ignore case if all lower-case
 set hlsearch              " highlight searched phrases.
 set incsearch             " But do highlight as you type your search.
 set ignorecase            " Make searches case-insensitive.
-set ruler                 " Always show info along bottom.
-set showmatch
-set statusline=%<%f\%h%m%r%=%-20.(line=%l\ \ col=%c%V\ \ totlin=%L%)\ \ \%h%m%r%=%-40(bytval=0x%B,%n%Y%)\%P
-set visualbell
-
-set showmode              " Always show what mode we are in
-set smartcase             " ignore case if all lower-case
 set gdefault              " search/replace globally (on a line)
+set showmatch
+
 set pastetoggle=<F2>      " in insert mode toggle paste mode
 set mouse=a               " use the mouse in all modes
 set clipboard=unnamed     " normal clipboard interaction
@@ -145,7 +142,6 @@ set wildmode=list:full    " show a list when pressing tab
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.o
 set visualbell            " don't beep
 set noerrorbells          " don't beep
-set showcmd               " show partial command in last line.
 
 nmap <silent> <leader>/ :nohlsearch<CR>
 
@@ -163,6 +159,46 @@ nnoremap ; :
 nnoremap j gj
 nnoremap k gk
 
+" Restore cursor to last time opened
+function! ResCur()
+    if line("'\"") <= line("$")
+        normal! g`"
+        return 1
+    endif
+endfunction
+
+augroup resCur
+    autocmd!
+    autocmd BufWinEnter * call ResCur()
+augroup END
+
+" status lines
+set laststatus=2          " last window always has a statusline
+set showmode              " Always show what mode we are in
+set showcmd               " show partial command in last line.
+set ruler                 " Always show info along bottom.
+if has('statusline')
+    set laststatus=2
+
+    " Broken down into easily includeable segments
+    set statusline=%<%f\                     " Filename
+    set statusline+=%w%h%m%r                 " Options
+"    set statusline+=%{fugitive#statusline()} " Git Hotness
+    set statusline+=\ [%{&ff}/%Y]            " Filetype
+    set statusline+=\ [%{getcwd()}]          " Current dir
+    set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+endif
+
+" Yank from the cursor to the end of the line, to be consistent with C and D
+nnoremap Y y$
+
+" For when you forget to sudo.. Really write the file.
+cmap w!! w !sudo tee % >/dev/null
+
+" Map <leader>ff to display all lines with keyword under cursor
+" and ask which one to jump to
+nmap <leader>ff [I:let nr = input("Which one: ")<bar>exe "normal " . nr ."[\t"<cr>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 05. Text Formatting/Layout                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -179,6 +215,7 @@ set nowrap                " don't wrap text
 set backspace=indent,eol,start " backspacing over everything
 set copyindent            " copy previous indentation on autoindenting
 set formatoptions+=1      " Don't allow 1-letter words at end of lines
+set spell                 " spell checker
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 06. Custom Commands                                                        "
