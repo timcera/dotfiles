@@ -113,7 +113,7 @@ endif
 let mapleader=","
 let maplocalleader="\\"
 
-set number                " show line numbers
+set relativenumber        " show relative line numbers
 set numberwidth=6         " make the number gutter 6 characters wide
 set cul                   " highlight current line
 set laststatus=2          " last window always has a statusline
