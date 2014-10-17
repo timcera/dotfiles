@@ -150,8 +150,8 @@ vnoremap Q gq
 nnoremap Q gqap
 
 " grep for word under cursor
-vnoremap <leader>a y:grep! "\b<c-r>"\b"<cr>:cs<cr>
-nnoremap <leader>a :grep! "\b<c-r><c-w>\b"
+vnoremap <leader>a y:grep! "\b<c-r>"\b" <cr>:cs<cr>
+nnoremap <leader>a :grep! "\b<c-r><c-w>\b" 
 nnoremap K *N:grep! "\b<c-r><c-w>\b"<cr>:cw<cr>
 
 nnoremap ; :
@@ -220,6 +220,8 @@ set spell                 " spell checker
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 06. Custom Commands                                                        "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Gundo toggle
+nnoremap <F5> :GundoToggle<CR>
 
 " Prettify JSON files making them easier to read
 command PrettyJSON %!python -m json.tool
