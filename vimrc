@@ -131,9 +131,10 @@ set clipboard=unnamed     " normal clipboard interaction
 set hidden                " hide buffers
 set history=1000          " history
 set undolevels=1000       " many undos
-if v:version >= 730
+if v:version >= 703
     set undofile          " keep a persistent undo file
     set undodir=~/.vim/.undo,~/tmp,/tmp
+    set undoreload=1000        
 endif
 set nobackup              " Really - have I ever use this?
 set noswapfile            " Here also.
@@ -203,12 +204,12 @@ nmap <leader>ff [I:let nr = input("Which one: ")<bar>exe "normal " . nr ."[\t"<c
 " 05. Text Formatting/Layout                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set autoindent            " auto-indent
+set smartindent           " automatically insert one extra level of indentation
 set tabstop=4             " tab spacing
 set softtabstop=4         " unify
 set shiftwidth=4          " indent/outdent by 2 columns
 set shiftround            " always indent/outdent to the nearest tabstop
 set expandtab             " use spaces instead of tabs
-set smartindent           " automatically insert one extra level of indentation
 set smarttab              " use tabs at the start of a line, spaces elsewhere
 set nowrap                " don't wrap text
 
