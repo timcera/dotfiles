@@ -49,6 +49,8 @@ Plugin 'JuliaLang/julia-vim'
 Plugin 'YankRing.vim'
 Plugin 'LustyJuggler'
 Plugin 'gundo'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'visualrepeat'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -122,7 +124,6 @@ set smartcase             " ignore case if all lower-case
 set hlsearch              " highlight searched phrases.
 set incsearch             " But do highlight as you type your search.
 set ignorecase            " Make searches case-insensitive.
-set gdefault              " search/replace globally (on a line)
 set showmatch
 
 set pastetoggle=<F2>      " in insert mode toggle paste mode
