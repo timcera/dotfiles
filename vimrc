@@ -124,8 +124,6 @@ set cul                   " highlight current line
 set autoread
 set autowriteall
 
-set breakindent
-
 " search
 set smartcase             " ignore case if all lower-case
 set hlsearch              " highlight searched phrases.
