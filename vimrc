@@ -51,6 +51,8 @@ Plugin 'LustyJuggler'
 Plugin 'gundo'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'visualrepeat'
+Plugin 'HowMuch'
+Plugin 'klen/python-mode'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -119,6 +121,11 @@ set relativenumber        " show relative line numbers
 set numberwidth=6         " make the number gutter 6 characters wide
 set cul                   " highlight current line
 
+set autoread
+set autowriteall
+
+set breakindent
+
 " search
 set smartcase             " ignore case if all lower-case
 set hlsearch              " highlight searched phrases.
@@ -128,7 +135,7 @@ set showmatch
 
 set pastetoggle=<F2>      " in insert mode toggle paste mode
 set mouse=a               " use the mouse in all modes
-set clipboard=unnamed     " normal clipboard interaction
+set clipboard=unnamedplus,exclude:cons\|linux " normal clipboard interaction
 set hidden                " hide buffers
 set history=1000          " history
 set undolevels=1000       " many undos
@@ -142,7 +149,7 @@ set noswapfile            " Here also.
 set wildmenu              " tab completion for files and dirs
 set wildmode=list:full    " show a list when pressing tab
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.o
-set visualbell            " don't beep
+set visualbell t_vb=      " don't beep or flash
 set noerrorbells          " don't beep
 
 nmap <silent> <leader>/ :nohlsearch<CR>
@@ -219,6 +226,18 @@ set copyindent            " copy previous indentation on autoindenting
 set formatoptions+=1      " Don't allow 1-letter words at end of lines
 set spell                 " spell checker
 
+" Removes trailing spaces
+function! TrimWhiteSpace()
+    %s/\s\+$//e
+endfunction
+" In case I want to use it...
+nnoremap <silent> <Leader>rts :call TrimWhiteSpace()<CR>
+" But like the automatic mode...
+autocmd FileType python,java autocmd FileWritePre    * :call TrimWhiteSpace()
+autocmd FileType python,java autocmd FileAppendPre   * :call TrimWhiteSpace()
+autocmd FileType python,java autocmd FilterWritePre  * :call TrimWhiteSpace()
+autocmd FileType python,java autocmd BufWritePre     * :call TrimWhiteSpace()
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 06. Custom Commands                                                        "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -227,3 +246,10 @@ nnoremap <F5> :GundoToggle<CR>
 
 " Prettify JSON files making them easier to read
 command PrettyJSON %!python -m json.tool
+
+" Python, but nice for other things to...
+im :<CR> :<CR><TAB>
+
+" Python - get rid of trailing white space
+autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
+
