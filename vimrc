@@ -251,3 +251,5 @@ im :<CR> :<CR><TAB>
 " Python - get rid of trailing white space
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
 
+" HowMuch options
+let g:HowMuch_scale = 10
