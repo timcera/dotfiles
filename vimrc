@@ -116,8 +116,8 @@ endif
 let mapleader=","
 let maplocalleader="\\"
 
-set relativenumber        " show relative line numbers
-set numberwidth=6         " make the number gutter 6 characters wide
+" set relativenumber        " show relative line numbers
+" set numberwidth=6         " make the number gutter 6 characters wide
 set cul                   " highlight current line
 
 set autoread
@@ -131,7 +131,8 @@ set ignorecase            " Make searches case-insensitive.
 set showmatch
 
 set pastetoggle=<F2>      " in insert mode toggle paste mode
-set mouse=a               " use the mouse in all modes
+set guioptions+=a
+set mouse=r               " use the mouse 
 set clipboard=unnamedplus,exclude:cons\|linux " normal clipboard interaction
 set hidden                " hide buffers
 set history=1000          " history
