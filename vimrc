@@ -143,8 +143,10 @@ if v:version >= 703
     set undodir=~/.vim/.undo,~/tmp,/tmp
     set undoreload=1000        
 endif
+
 set nobackup              " Really - have I ever use this?
-set noswapfile            " Here also.
+set swapfile              " I like the warning when using multiple sessions.
+
 set wildmenu              " tab completion for files and dirs
 set wildmode=list:full    " show a list when pressing tab
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.o
