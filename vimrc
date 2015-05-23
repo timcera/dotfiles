@@ -52,6 +52,7 @@ Plugin 'gundo'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'visualrepeat'
 Plugin 'HowMuch'
+Plugin 'Tabular'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
