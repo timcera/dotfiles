@@ -53,6 +53,13 @@ Plugin 'HowMuch'
 Plugin 'Tabular'
 Plugin 'Rykka/riv.vim'
 Plugin 'ervandew/supertab'
+Plugin 'vim-fugitive'
+Plugin 'fountain.vim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'vim-scripts/indentpython.vim'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -68,6 +75,10 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+
+" Specific things to add to get a plugin to work.  Delete if deleting the
+" plugin
+autocmd BufRead,BufNewFile *.fountain set filetype=fountain
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Events                                                                 "
@@ -256,3 +267,12 @@ autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
 
 " HowMuch options
 let g:HowMuch_scale = 10
+
+" Set fountain to soft wrap text
+autocmd Filetype fountain setlocal wrap linebreak nolist
+
+let g:SimpylFold_docstring_preview = 1
+
+" Python indentation
+autocmd BufNewFile,BufRead *.py set textwidth=72
+
