@@ -47,12 +47,12 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'nvie/vim-togglemouse'
 Plugin 'JuliaLang/julia-vim'
 Plugin 'YankRing.vim'
-Plugin 'LustyJuggler'
 Plugin 'gundo'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'visualrepeat'
 Plugin 'HowMuch'
 Plugin 'Tabular'
+Plugin 'Rykka/riv.vim'
+Plugin 'ervandew/supertab'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
