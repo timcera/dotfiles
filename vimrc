@@ -14,19 +14,27 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible         " get rid of Vi compatibility mode. SET FIRST!
 
+if has('nvim')
+    let s:editor_root=expand("~/.config/nvim")
+else
+    let s:editor_root=expand("~/.vim")
+endif
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 01. Vundle                                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+let vudir = s:editor_root . '/bundle/'
+let &rtp .= ',' . vudir . 'Vundle.vim'
+
+call vundle#begin( vudir )
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -49,20 +57,24 @@ Plugin 'JuliaLang/julia-vim'
 Plugin 'YankRing.vim'
 Plugin 'gundo'
 Plugin 'visualrepeat'
+Plugin 'tpope/vim-repeat'
 Plugin 'HowMuch'
 Plugin 'Tabular'
-Plugin 'Rykka/riv.vim'
-Plugin 'ervandew/supertab'
 Plugin 'tpope/vim-fugitive'
 Plugin 'fountain.vim'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'tmhedberg/SimpylFold'
+Plugin 'Konfekt/FastFold'
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'vim-scripts/indentpython.vim'
 
+Plugin 'Rykka/riv.vim'
+
+Plugin 'philpep/vim-rst-tables'
+
+Plugin 'Shougo/neocomplete'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
+
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -143,6 +155,7 @@ set ignorecase            " Make searches case-insensitive.
 set showmatch
 
 set pastetoggle=<F2>      " in insert mode toggle paste mode
+
 set guioptions+=a
 set mouse=r               " use the mouse 
 set clipboard=unnamedplus,exclude:cons\|linux " normal clipboard interaction
@@ -275,4 +288,3 @@ let g:SimpylFold_docstring_preview = 1
 
 " Python indentation
 autocmd BufNewFile,BufRead *.py set textwidth=72
-
