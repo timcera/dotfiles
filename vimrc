@@ -287,3 +287,8 @@ let g:SimpylFold_docstring_preview = 1
 " Python indentation
 autocmd BufNewFile,BufRead *.py set textwidth=72
 
+" Better location on home row.
+noremap l h
+noremap ; l
+noremap h ;
+
