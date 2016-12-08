@@ -1,16 +1,17 @@
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sections:                                                                  "
-"   01. General ................. General Vim behavior                       "
-"   02. Events .................. General autocmd events                     "
-"   03. Theme/Colors ............ Colors, fonts, etc.                        "
-"   04. Vim UI .................. User interface behavior                    "
-"   05. Text Formatting/Layout .. Text, tab, indentation related             "
-"   06. Custom Commands ......... Any custom command aliases                 "
+"   General ................. General Vim behavior                           "
+"   Events .................. General autocmd events                         "
+"   Theme/Colors ............ Colors, fonts, etc.                            "
+"   Vim UI .................. User interface behavior                        "
+"   Text Formatting/Layout .. Text, tab, indentation related                 "
+"   Search .................. Commands for searching                         "
+"   Custom Commands ......... Any custom command aliases                     "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 01. General                                                                "
+" General                                                                    "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible         " get rid of Vi compatibility mode. SET FIRST!
 
@@ -21,34 +22,49 @@ else
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 01. Vundle                                                                 "
+" Vundle                                                                     "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to 
+"                     update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to 
+"                     refresh local cache
+" :PluginClean      - confirms removal of unused plugins; 
+"                     append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 let vudir = s:editor_root . '/bundle/'
 let &rtp .= ',' . vudir . 'Vundle.vim'
 
-call vundle#begin( vudir )
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+call vundle#begin( vudir )    " required
+" Required to keep 'Plugin' commands between vundle#begin/end.
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
 " The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
+"
 " plugin on GitHub repo
 "Plugin 'tpope/vim-fugitive'
+"
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
+"
 " Git plugin not hosted on GitHub
 "Plugin 'git://git.wincent.com/command-t.git'
+"
 " git repos on your local machine (i.e. when working on your own plugin)
 "Plugin 'file:///home/gmarik/path/to/plugin'
+"
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
 "Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+"
 " Avoid a name conflict with L9
 "Plugin 'user/L9', {'name': 'newL9'}
 
@@ -65,37 +81,21 @@ Plugin 'fountain.vim'
 Plugin 'Konfekt/FastFold'
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'vim-scripts/indentpython.vim'
-
 Plugin 'Rykka/riv.vim'
-
 Plugin 'philpep/vim-rst-tables'
-
 Plugin 'Shougo/neocomplete'
 
-" All of your Plugins must be added before the following line
+" Required to keep 'Plugin' commands between vundle#begin/end.
 call vundle#end()            " required
 
 filetype plugin indent on    " required
+                             " filetype detection[ON] plugin[ON] indent[ON]
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
-" Specific things to add to get a plugin to work.  Delete if deleting the
-" plugin
-autocmd BufRead,BufNewFile *.fountain set filetype=fountain
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 02. Events                                                                 "
+" Events                                                                     "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
 
 " In Makefiles DO NOT use spaces instead of tabs
 autocmd FileType make setlocal noexpandtab
@@ -106,7 +106,7 @@ autocmd FileType ruby setlocal sw=2 ts=2 sts=2
 set ofu=syntaxcomplete#Complete
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 03. Theme/Colors                                                           "
+" Theme/Colors                                                               "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set t_Co=256              " enable 256-color mode.
 syntax enable             " enable syntax highlighting (previously syntax on).
@@ -135,7 +135,7 @@ else
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 04. Vim UI                                                                 "
+" Vim UI                                                                     "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader=","
 let maplocalleader="\\"
@@ -183,11 +183,6 @@ nnoremap <leader>N :setlocal number!<cr>
 vnoremap Q gq
 nnoremap Q gqap
 
-" grep for word under cursor
-vnoremap <leader>a y:grep! "\b<c-r>"\b" <cr>:cs<cr>
-nnoremap <leader>a :grep! "\b<c-r><c-w>\b" 
-nnoremap K *N:grep! "\b<c-r><c-w>\b"<cr>:cw<cr>
-
 nnoremap ; :
 
 nnoremap j gj
@@ -214,7 +209,7 @@ set ruler                 " Always show info along bottom.
 if has('statusline')
     set laststatus=2
 
-    " Broken down into easily includeable segments
+    " Broken down into segments
     set statusline=%<%f\                     " Filename
     set statusline+=%w%h%m%r                 " Options
 "    set statusline+=%{fugitive#statusline()} " Git Hotness
@@ -229,12 +224,8 @@ nnoremap Y y$
 " For when you forget to sudo.. Really write the file.
 cmap w!! w !sudo tee % >/dev/null
 
-" Map <leader>ff to display all lines with keyword under cursor
-" and ask which one to jump to
-nmap <leader>ff [I:let nr = input("Which one: ")<bar>exe "normal " . nr ."[\t"<cr>
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 05. Text Formatting/Layout                                                 "
+" Text Formatting/Layout                                                     "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set autoindent            " auto-indent
 set smartindent           " automatically insert one extra level of indentation
@@ -264,7 +255,19 @@ autocmd FileType python,java autocmd FilterWritePre  * :call TrimWhiteSpace()
 autocmd FileType python,java autocmd BufWritePre     * :call TrimWhiteSpace()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 06. Custom Commands                                                        "
+" Search                                                                     "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Map <leader>ff to display all lines with keyword under cursor within current
+" file and ask which one to jump to
+nmap <leader>ff [I:let nr = input("Which one: ")<bar>exe "normal " . nr ."[\t"<cr>
+
+" grep for word under cursor in files
+vnoremap <leader>a y:grep! "\b<c-r>"\b" <cr>:cs<cr>
+nnoremap <leader>a :grep! "\b<c-r><c-w>\b" 
+nnoremap K *N:grep! "\b<c-r><c-w>\b"<cr>:cw<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Custom Commands                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Gundo toggle
 nnoremap <F5> :GundoToggle<CR>
@@ -272,19 +275,15 @@ nnoremap <F5> :GundoToggle<CR>
 " Prettify JSON files making them easier to read
 command PrettyJSON %!python -m json.tool
 
-" Python, but nice for other things to...
-im :<CR> :<CR><TAB>
-
-" Python - get rid of trailing white space
-autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
-
 " HowMuch options
 let g:HowMuch_scale = 10
 
 " Set fountain to soft wrap text
+autocmd BufRead,BufNewFile *.fountain set filetype=fountain
 autocmd Filetype fountain setlocal wrap linebreak nolist
 
 let g:SimpylFold_docstring_preview = 1
 
 " Python indentation
 autocmd BufNewFile,BufRead *.py set textwidth=72
+
