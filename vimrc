@@ -242,6 +242,8 @@ set copyindent            " copy previous indentation on autoindenting
 set formatoptions+=1      " Don't allow 1-letter words at end of lines
 set spell                 " spell checker
 
+set fileformat=unix
+
 " Removes trailing spaces
 function! TrimWhiteSpace()
     %s/\s\+$//e
@@ -285,10 +287,12 @@ autocmd Filetype fountain setlocal wrap linebreak nolist
 let g:SimpylFold_docstring_preview = 1
 
 " Python indentation
-autocmd BufNewFile,BufRead *.py set textwidth=72
+autocmd BufNewFile,BufRead *.py set textwidth=72 formatoptions+=ro
 
 " Better location on home row.
 noremap l h
 noremap ; l
 noremap h ;
+
+autocmd FileType sh,zsh,csh,tcsh,bash if &modifiable|setlocal fileformat=unix|endif
 
