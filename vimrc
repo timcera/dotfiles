@@ -314,4 +314,5 @@ setlocal textwidth=79
 setlocal commentstring=#%s
 setlocal define=^\s*\\(def\\\\|class\\)
 
-
+" Allow ,w to switch panes since Ctrl-w is interpreted by Chrome.
+noremap <leader>w <C-w><C-w>
