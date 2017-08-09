@@ -82,8 +82,10 @@ Plugin 'Konfekt/FastFold'
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'Rykka/riv.vim'
-Plugin 'philpep/vim-rst-tables'
+Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'Shougo/neocomplete'
+Plugin 'reedes/vim-pencil'
+Plugin 'python-mode/python-mode'
 
 " Required to keep 'Plugin' commands between vundle#begin/end.
 call vundle#end()            " required
@@ -122,7 +124,7 @@ autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
 " Prettify Markdown files
 augroup markdown
   au!
-  au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+  au BufNewFile,BufRead *.md,*.markdown setlocal filetype=mkd
 augroup END
 
 " Highlight characters that go over 80 columns (by drawing a border on the 81st)
@@ -287,7 +289,7 @@ autocmd Filetype fountain setlocal wrap linebreak nolist
 let g:SimpylFold_docstring_preview = 1
 
 " Python indentation
-autocmd BufNewFile,BufRead *.py set textwidth=72 formatoptions+=ro
+autocmd BufNewFile,BufRead *.py set textwidth=79 formatoptions+=ro
 
 " Better location on home row.
 noremap l h
@@ -295,4 +297,21 @@ noremap ; l
 noremap h ;
 
 autocmd FileType sh,zsh,csh,tcsh,bash if &modifiable|setlocal fileformat=unix|endif
+
+" RST tables
+autocmd FileType rst,py if &modifiable|let g:table_mode_corner='+' g:table_mode_header_fillchar='='|endif
+
+set encoding=utf-8
+
+let g:pymode_line = 0
+
+" remove automatic line numbers and put everything else back
+let g:pymode_options = 0
+setlocal complete+=t
+setlocal formatoptions-=t
+setlocal nowrap
+setlocal textwidth=79
+setlocal commentstring=#%s
+setlocal define=^\s*\\(def\\\\|class\\)
+
 
