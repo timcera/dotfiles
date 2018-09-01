@@ -85,7 +85,8 @@ Plugin 'Rykka/riv.vim'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'Shougo/neocomplete'
 Plugin 'reedes/vim-pencil'
-Plugin 'python-mode/python-mode'
+Plugin 'rudrab/vimf90'
+Plugin 'caglartoklu/fortran_line_length.vim'
 
 " Required to keep 'Plugin' commands between vundle#begin/end.
 call vundle#end()            " required
@@ -316,3 +317,8 @@ setlocal define=^\s*\\(def\\\\|class\\)
 
 " Allow ,w to switch panes since Ctrl-w is interpreted by Chrome.
 noremap <leader>w <C-w><C-w>
+
+" Highlight non-ascii characters
+syntax match nonascii "[^\x00-\x7F]"
+highlight nonascii guibg=Red ctermbg=2
+
