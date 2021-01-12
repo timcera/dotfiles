@@ -1,4 +1,5 @@
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sections:                                                                  "
 "   General ................. General Vim behavior                           "
@@ -68,25 +69,24 @@ Plugin 'VundleVim/Vundle.vim'
 " Avoid a name conflict with L9
 "Plugin 'user/L9', {'name': 'newL9'}
 
-Plugin 'nvie/vim-togglemouse'
+"Plugin 'SirVer/ultisnips'
 Plugin 'JuliaLang/julia-vim'
-Plugin 'YankRing.vim'
 Plugin 'gundo'
 Plugin 'visualrepeat'
-Plugin 'tpope/vim-repeat'
 Plugin 'HowMuch'
 Plugin 'Tabular'
-Plugin 'tpope/vim-fugitive'
-Plugin 'fountain.vim'
+"Plugin 'tpope/vim-fugitive'
+"Plugin 'fountain.vim'
 Plugin 'Konfekt/FastFold'
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'Rykka/riv.vim'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'Shougo/neocomplete'
-Plugin 'reedes/vim-pencil'
-Plugin 'rudrab/vimf90'
+"Plugin 'reedes/vim-pencil'
+"Plugin 'rudrab/vimf90'
 Plugin 'caglartoklu/fortran_line_length.vim'
+"Plugin 'ingo-library'
 
 " Required to keep 'Plugin' commands between vundle#begin/end.
 call vundle#end()            " required
@@ -282,6 +282,12 @@ command PrettyJSON %!python -m json.tool
 
 " HowMuch options
 let g:HowMuch_scale = 10
+vmap <leader>hm <Plug>AutoCalcAppend             
+vmap <leader>hms <Plug>AutoCalcAppendWithSum      
+vmap <leader>hme <Plug>AutoCalcAppendWithEq       
+vmap <leader>hmse <Plug>AutoCalcAppendWithEqAndSum 
+vmap <leader>hmr <Plug>AutoCalcReplace            
+vmap <leader>hmrs <Plug>AutoCalcReplaceWithSum     
 
 " Set fountain to soft wrap text
 autocmd BufRead,BufNewFile *.fountain set filetype=fountain
@@ -293,9 +299,11 @@ let g:SimpylFold_docstring_preview = 1
 autocmd BufNewFile,BufRead *.py set textwidth=79 formatoptions+=ro
 
 " Better location on home row.
-noremap l h
-noremap ; l
-noremap h ;
+noremap h <Nop>
+noremap j <Left>
+noremap k <Down>
+noremap l <Up>
+noremap ; <Right>
 
 autocmd FileType sh,zsh,csh,tcsh,bash if &modifiable|setlocal fileformat=unix|endif
 
@@ -316,9 +324,64 @@ setlocal commentstring=#%s
 setlocal define=^\s*\\(def\\\\|class\\)
 
 " Allow ,w to switch panes since Ctrl-w is interpreted by Chrome.
+" Ctrl W and Chrome - dumpster fire
 noremap <leader>w <C-w><C-w>
 
 " Highlight non-ascii characters
 syntax match nonascii "[^\x00-\x7F]"
 highlight nonascii guibg=Red ctermbg=2
 
+
+" Map jj to Esc
+inoremap jj <Esc>`^
+inoremap lkj <Esc>`^:w<CR>
+inoremap ;lkj <Esc>`^:wq<CR>
+
+"function! Prose()
+"  call pencil#init()
+"  call lexical#init()
+"  call litecorrect#init()
+"  call textobj#quote#init()
+"  call textobj#sentence#init()
+"
+"  " manual reformatting shortcuts
+"  nnoremap <buffer> <silent> Q gqap
+"  xnoremap <buffer> <silent> Q gq
+"  nnoremap <buffer> <silent> <leader>Q vapJgqap
+"
+"  " force top correction on most recent misspelling
+"  nnoremap <buffer> <c-s> [s1z=<c-o>
+"  inoremap <buffer> <c-s> <c-g>u<Esc>[s1z=`]A<c-g>u
+"
+"  " replace common punctuation
+"  iabbrev <buffer> -- –
+"  iabbrev <buffer> --- —
+"  iabbrev <buffer> << «
+"  iabbrev <buffer> >> »
+"
+"  " open most folds
+"  setlocal foldlevel=6
+"
+"  " replace typographical quotes (reedes/vim-textobj-quote)
+"  map <silent> <buffer> <leader>qc <Plug>ReplaceWithCurly
+"  map <silent> <buffer> <leader>qs <Plug>ReplaceWithStraight
+"
+"  " highlight words (reedes/vim-wordy)
+"  noremap <silent> <buffer> <F8> :<C-u>NextWordy<cr>
+"  xnoremap <silent> <buffer> <F8> :<C-u>NextWordy<cr>
+"  inoremap <silent> <buffer> <F8> <C-o>:NextWordy<cr>
+"
+"endfunction
+"
+"" automatically initialize buffer by file type
+"autocmd FileType markdown,mkd,text,rst call Prose()
+"
+"" invoke manually by command for other file types
+"command! -nargs=0 Prose call Prose()
+"
+autocmd Filetype fortran setlocal formatprg=fprettify\ --silent
+
+" vimdiff colors make it impossible to see what is going on.  Turn off.
+if &diff
+    syntax off
+endif
